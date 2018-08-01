@@ -13,7 +13,14 @@ import {isPlatformBrowser} from '@angular/common';
 import {GlobalRef} from './windowRef.service';
 import {AutoCompleteSearchService} from './auto-complete.service';
 
+export interface SettingsLabels {
+  currentLocationText?: string;
+  recentSearchesText?: string;
+  locationsText?: string;
+}
+
 export interface Settings {
+  labels: SettingsLabels;
   geoPredictionServerUrl?: string;
   geoLatLangServiceUrl?: string;
   geoLocDetailServerUrl?: string;
@@ -61,14 +68,14 @@ export interface Settings {
         <li *ngIf="settings.showCurrentLocation" class="currentlocation">
           <a href="javascript:;" (click)="currentLocationSelected()">
             <i class="location-icon" *ngIf="settings.currentLocIconUrl"
-               [ngStyle]="{'background-image': 'url(' + settings.currentLocIconUrl + ')'}"></i>Use Current Location
+               [ngStyle]="{'background-image': 'url(' + settings.currentLocIconUrl + ')'}"></i>{{settings.labels.currentLocationText}}
             <i class="location-icon current-default-icon" *ngIf="!settings.currentLocIconUrl"></i>
           </a>
         </li>
-        <li class="heading heading-recent" *ngIf="!recentDropdownOpen && queryItems.length"><span>Locations</span><span
+        <li class="heading heading-recent" *ngIf="!recentDropdownOpen && queryItems.length"><span>{{settings.labels.locationsText}}</span><span
           class="line line-location"></span></li>
         <li class="heading heading-recent" *ngIf="recentDropdownOpen && queryItems.length">
-          <span>Recent Searches</span><span class="line line-recent"></span>
+          <span>{{settings.labels.recentSearchesText}}</span><span class="line line-recent"></span>
         </li>
         <li *ngFor="let data of queryItems;let $index = index" [ngClass]="{'active': data.active}">
           <a href="javascript:;" (mouseover)="activeListNode($index)" (click)="selectedListNode($index)">
@@ -334,12 +341,19 @@ export class AutoCompleteComponent implements OnInit, OnChanges {
   public queryItems: any = [];
   public isSettingsError: boolean = false;
   public settingsErrorMsg: string = '';
-  public settings: Settings = {};
+  public settings: Settings = {
+    labels: {}
+  };
   private moduleinit: boolean = false;
   private selectedDataIndex: number = -1;
   private recentSearchData: any = [];
   private userSelectedOption: any = '';
   private defaultSettings: Settings = {
+    labels: {
+      currentLocationText: 'Use Current Location',
+      recentSearchesText: 'Recent Searches',
+      locationsText: 'Locations'
+    },
     geoPredictionServerUrl: '',
     geoLatLangServiceUrl: '',
     geoLocDetailServerUrl: '',
