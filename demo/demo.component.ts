@@ -12,6 +12,7 @@ export class DemoComponent {
   public componentData5: any = '';
   public componentData6: any = '';
   public componentData7: any = '';
+  public componentData8: any = '';
   public userSettings2: any = {
     showRecentSearch: false,
     geoCountryRestriction: ['in'],
@@ -60,6 +61,19 @@ export class DemoComponent {
     recentStorageName: 'componentData5'
   };
 
+  public userSettings8: any = {
+    showSearchButton: false,
+    currentLocIconUrl: 'https://cdn4.iconfinder.com/data/icons/proglyphs-traveling/512/Current_Location-512.png',
+    locationIconUrl: 'http://www.myiconfinder.com/uploads/iconsets/369f997cef4f440c5394ed2ae6f8eecd.png',
+    recentStorageName: 'componentData8',
+    noOfRecentSearchSave: 8,
+    labels: {
+      currentLocationText: 'Use my location',
+      locationsText: 'Locs',
+      recentSearchesText: 'Searches made recently'
+    }
+  };
+
   constructor() {
     setTimeout(() => {
       this.userSettings3['inputPlaceholderText'] = 'This is delayed test';
@@ -105,4 +119,7 @@ export class DemoComponent {
     this.componentData7 = JSON.stringify(data);
   }
 
+  autoCompleteCallback8(data: any): any {
+    this.componentData8 = JSON.stringify(data);
+  }
 }
