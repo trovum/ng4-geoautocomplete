@@ -6,7 +6,7 @@ import {
 import { expect } from 'chai';
 import { NgxGeoautocompleteModule } from '../src';
 
-describe('ng4geo-autocomplete component', () => {
+describe('ngxgeo-autocomplete component', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
