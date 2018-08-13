@@ -17,6 +17,7 @@ export interface SettingsLabels {
   currentLocationText?: string;
   recentSearchesText?: string;
   locationsText?: string;
+  searchPlaceholderText?: string;
 }
 
 export interface Settings {
@@ -51,15 +52,17 @@ export interface Settings {
     <div class="custom-autocomplete" *ngIf="!isSettingsError">
       <div class="custom-autocomplete__container">
         <div class="custom-autocomplete__input" [ngClass]="{'button-included':settings.showSearchButton}">
-          <input [(ngModel)]="locationInput" (click)="searchinputClickCallback($event)"
-                 (keyup)="searchinputCallback($event)"
-                 type="search" name="search" id="search_places" placeholder="{{settings.inputPlaceholderText}}"
-                 autocomplete="off">
-          <button class="search-icon" *ngIf="settings.showSearchButton" (click)="userQuerySubmit()">
-            <i *ngIf="settings.searchIconUrl"
-               [ngStyle]="{'background-image': 'url(' + settings.searchIconUrl + ')'}"></i>
-            <i *ngIf="!settings.searchIconUrl" class="search-default-icon"></i>
-          </button>
+          <div class="input-padding-container">
+            <button class="submit-button btn btn-primary" *ngIf="settings.showSearchButton" (click)="userQuerySubmit()">
+              {{settings.labels.searchPlaceholderText}}
+            </button>
+            <div class="search-box-container">
+            <input  [(ngModel)]="locationInput" (click)="searchinputClickCallback($event)"
+                   (keyup)="searchinputCallback($event)"
+                   type="search" name="search" id="search_places" placeholder="{{settings.inputPlaceholderText}}"
+                   autocomplete="off" />
+            </div>
+          </div>
         </div>
         <pre class="custom-autocomplete__loader" *ngIf="gettingCurrentLocationFlag"><i class="gif"></i></pre>
       </div>
@@ -78,7 +81,7 @@ export interface Settings {
           <span>{{settings.labels.recentSearchesText}}</span><span class="line line-recent"></span>
         </li>
         <li *ngFor="let data of queryItems;let $index = index" [ngClass]="{'active': data.active}">
-          <a href="javascript:;" (mouseover)="activeListNode($index)" (click)="selectedListNode($index)">
+        <a href="javascript:;" (mouseover)="activeListNode($index)" (click)="selectedListNode($index)">
             <i class="custom-icon" *ngIf="settings.locationIconUrl"
                [ngStyle]="{'background-image': 'url(' + settings.locationIconUrl + ')'}"></i>
             <i class="custom-icon location-default-icon" *ngIf="!settings.locationIconUrl"></i>
@@ -245,14 +248,23 @@ export interface Settings {
       position: relative;
     }
 
+    .custom-autocomplete__input {
+      border-radius: 2px;
+      box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.24);
+    }
+
+    .input-padding-container {
+      padding: 10px;
+    }
+
     .custom-autocomplete__input input {
       font-family: Roboto;
       color: #2a2a2a;
       margin: 0;
       padding: 10px;
       height: 50px;
-      border: 2px solid #dadfe6;
-      border-radius: 0.375rem;
+      border-radius: 2px;
+      border: solid 1px #e4e4e4;
       display: block;
       width: 100%;
       overflow: hidden;
@@ -285,26 +297,6 @@ export interface Settings {
       padding-right: 60px;
     }
 
-    .search-icon {
-      position: absolute;
-      right: 0;
-      width: 55px;
-      top: 0;
-      height: 100%;
-      background-color: transparent;
-      border-bottom: 0;
-      border-top: 0;
-      border-right: 0;
-      border-left: 1px solid #ccc;
-    }
-
-    .search-icon i {
-      background-size: cover;
-      height: 23px;
-      width: 23px;
-      display: inline-block;
-    }
-
     .search-default-icon {
       background-image: url('data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDU2Ljk2NiA1Ni45NjYiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDU2Ljk2NiA1Ni45NjY7IiB4bWw6c3BhY2U9InByZXNlcnZlIiB3aWR0aD0iMTZweCIgaGVpZ2h0PSIxNnB4Ij4KPHBhdGggZD0iTTU1LjE0Niw1MS44ODdMNDEuNTg4LDM3Ljc4NmMzLjQ4Ni00LjE0NCw1LjM5Ni05LjM1OCw1LjM5Ni0xNC43ODZjMC0xMi42ODItMTAuMzE4LTIzLTIzLTIzcy0yMywxMC4zMTgtMjMsMjMgIHMxMC4zMTgsMjMsMjMsMjNjNC43NjEsMCw5LjI5OC0xLjQzNiwxMy4xNzctNC4xNjJsMTMuNjYxLDE0LjIwOGMwLjU3MSwwLjU5MywxLjMzOSwwLjkyLDIuMTYyLDAuOTIgIGMwLjc3OSwwLDEuNTE4LTAuMjk3LDIuMDc5LTAuODM3QzU2LjI1NSw1NC45ODIsNTYuMjkzLDUzLjA4LDU1LjE0Niw1MS44ODd6IE0yMy45ODQsNmM5LjM3NCwwLDE3LDcuNjI2LDE3LDE3cy03LjYyNiwxNy0xNywxNyAgcy0xNy03LjYyNi0xNy0xN1MxNC42MSw2LDIzLjk4NCw2eiIgZmlsbD0iIzAwMDAwMCIvPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K');
     }
@@ -324,6 +316,17 @@ export interface Settings {
       border: none;
     }
 
+    .search-box-container {
+      overflow: hidden;
+      width: 75%;
+      padding-right: 15px;
+    }
+
+    .submit-button {
+      float: right;
+      width: 25%;
+      height: 50px;
+    }
   `],
   host: {
     '(document:click)': 'closeAutocomplete($event)',
@@ -352,7 +355,8 @@ export class AutoCompleteComponent implements OnInit, OnChanges {
     labels: {
       currentLocationText: 'Use Current Location',
       recentSearchesText: 'Recent Searches',
-      locationsText: 'Locations'
+      locationsText: 'Locations',
+      searchPlaceholderText: 'Search'
     },
     geoPredictionServerUrl: '',
     geoLatLangServiceUrl: '',
