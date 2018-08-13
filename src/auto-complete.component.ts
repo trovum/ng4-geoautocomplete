@@ -53,7 +53,7 @@ export interface Settings {
       <div class="custom-autocomplete__container">
         <div class="custom-autocomplete__input" [ngClass]="{'button-included':settings.showSearchButton}">
           <div class="input-padding-container">
-            <button class="submit-button btn btn-primary" *ngIf="settings.showSearchButton" (click)="userQuerySubmit()">
+            <button class="submit-button btn btn-primary" *ngIf="settings.showSearchButton" (click)="processSearchQuery()">
               {{settings.labels.searchPlaceholderText}}
             </button>
             <div class="search-box-container">
