@@ -5,6 +5,7 @@ export interface SettingsLabels {
     currentLocationText?: string;
     recentSearchesText?: string;
     locationsText?: string;
+    searchPlaceholderText?: string;
 }
 export interface Settings {
     labels: SettingsLabels;
