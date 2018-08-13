@@ -7,7 +7,7 @@
   EventEmitter,
   OnInit,
   OnChanges,
-  ElementRef
+  ElementRef, ViewEncapsulation
 } from '@angular/core';
 import {isPlatformBrowser} from '@angular/common';
 import {GlobalRef} from './windowRef.service';
@@ -330,7 +330,8 @@ export interface Settings {
   `],
   host: {
     '(document:click)': 'closeAutocomplete($event)',
-  }
+  },
+  encapsulation: ViewEncapsulation.None
 })
 export class AutoCompleteComponent implements OnInit, OnChanges {
   @Input() userSettings: Settings;
