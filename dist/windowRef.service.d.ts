@@ -1,7 +1,7 @@
 export interface MyGlobal {
 }
 export declare abstract class GlobalRef {
-    readonly abstract nativeGlobal: MyGlobal;
+    abstract readonly nativeGlobal: MyGlobal;
 }
 export declare class BrowserGlobalRef extends GlobalRef {
     readonly nativeGlobal: MyGlobal;

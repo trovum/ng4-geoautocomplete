@@ -62,16 +62,16 @@ export declare class AutoCompleteComponent implements OnInit, OnChanges {
     closeAutocomplete(event: any): any;
     userQuerySubmit(selectedOption?: any): any;
     currentLocationSelected(): any;
-    private moduleInit();
-    private processSearchQuery();
-    private setUserSettings();
-    private getListQuery(value);
-    private extractServerList(arrayList, data);
-    private updateListItem(listData);
-    private showRecentSearch();
-    private navigateInList(keyCode);
-    private getCurrentLocationInfo(latlng);
-    private getPlaceLocationInfo(selectedData);
-    private setRecentLocation(data);
-    private getRecentLocations();
+    private moduleInit;
+    private processSearchQuery;
+    private setUserSettings;
+    private getListQuery;
+    private extractServerList;
+    private updateListItem;
+    private showRecentSearch;
+    private navigateInList;
+    private getCurrentLocationInfo;
+    private getPlaceLocationInfo;
+    private setRecentLocation;
+    private getRecentLocations;
 }

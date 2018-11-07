@@ -1,7 +1,6 @@
 import { GlobalRef } from './windowRef.service';
 import { HttpClient } from '@angular/common/http';
 import { LocalStorageService } from './storage.service';
-import 'rxjs/Rx';
 export declare class AutoCompleteSearchService {
     private _http;
     private platformId;
@@ -18,6 +17,6 @@ export declare class AutoCompleteSearchService {
     getGeoPaceDetailByReferance(referance: string): Promise<any>;
     addRecentList(localStorageName: string, result: any, itemSavedLength: number): any;
     getRecentList(localStorageName: string): Promise<any>;
-    private getUniqueResults(arr);
-    private geoPredictionCall(placesService, queryInput);
+    private getUniqueResults;
+    private geoPredictionCall;
 }
