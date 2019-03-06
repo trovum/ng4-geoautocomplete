@@ -86,7 +86,7 @@ export interface Settings {
     </div>
     <div class="custom-autocomplete--error" *ngIf="isSettingsError">{{settingsErrorMsg}}</div>
   `,
-  styleUrls: ['./auto-complete.component.ts'],
+  styleUrls: ['./auto-complete.component.scss'],
   host: {
     '(document:click)': 'closeAutocomplete($event)',
   }
